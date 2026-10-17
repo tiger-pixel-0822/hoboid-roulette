@@ -2,281 +2,517 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>호보이드 스폰 룰렛</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;700&family=Special+Elite&display=swap">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>좀보이드 맵 룰렛</title>
 <style>
-/* Layout: one column survival terminal — header strip, wheel, result note, town checklist. Single dark look on purpose (game UI). */
-:root{
-  --bg:#141413;
-  --panel:#1f1e1c;
-  --panel-2:#2a2826;
-  --line:#3b3835;
-  --fg:#e3ddd2;
-  --muted:#9b958a;
-  --blood:#9e1b16;
-  --blood-hi:#c4271f;
-  --note:#e8d98a;
-  --note-ink:#2b2614;
-  --display:"Black Han Sans","Noto Sans KR",sans-serif;
-  --body:"Noto Sans KR",system-ui,sans-serif;
-  --type:"Special Elite","Courier New",monospace;
-  color-scheme:dark;
+@font-face { font-family: "Galmuri"; font-weight: 400; font-display: block; src: url(data:font/woff2;base64,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) format("woff2"); }
+@font-face { font-family: "Galmuri"; font-weight: 700; font-display: block; src: url(data:font/woff2;base64,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) format("woff2"); }
+/* Galmuri by Minseo Lee, SIL Open Font License 1.1 */
+/* Concept: a tiger arcade cabinet. Marquee, screen, control deck and ticket all live in one cabinet body.
+   Palette is taken from the tiger only: ink, maroon cabinet, tiger orange, gold, cream, lever red. Single night look by choice. */
+:root {
+  --night: #1d1230;
+  --ink: #2b1b24;
+  --cab: #5a2236;
+  --cab-hi: #7a3048;
+  --cab-lo: #3d1626;
+  --orange: #f2902f;
+  --orange-d: #c8621e;
+  --gold: #ffc94a;
+  --cream: #fff3dc;
+  --cream-d: #e8d3b0;
+  --red: #e2543b;
+  --red-d: #a82c2c;
+  --soft: #c99aae;
+  --f: "Galmuri", "Apple SD Gothic Neo", "Malgun Gothic", monospace;
+  --pad: 16px;
+  color-scheme: dark;
 }
-*{box-sizing:border-box}
-html,body{min-height:100%}
-body{
-  background:var(--bg);
-  background-image:
-    radial-gradient(ellipse at 50% -10%, rgba(158,27,22,.18), transparent 60%),
-    repeating-linear-gradient(0deg, rgba(255,255,255,.012) 0 2px, transparent 2px 4px);
-  color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.6;
-  padding-inline:16px;padding-block:24px 48px;
+*, *::before, *::after { box-sizing: border-box; }
+html, body { min-height: 100%; }
+body {
+  background: var(--night); color: var(--cream); font-family: var(--f);
+  font-size: 14px; line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 56px;
+  -webkit-font-smoothing: none;
 }
-.wrap{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
+#sky { position: fixed; inset: 0; width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated; z-index: 0; pointer-events: none; }
+.wrap { position: relative; z-index: 1; max-width: 448px; margin: 0 auto; }
 
-header{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
-.date{font-family:var(--type);color:var(--muted);font-size:13px;letter-spacing:.06em}
-h1{font-family:var(--display);font-weight:400;font-size:clamp(34px,8vw,58px);line-height:1.05;margin:0;
-  color:var(--fg);text-wrap:balance;text-shadow:3px 3px 0 var(--blood)}
-.sub{color:var(--muted);margin:0;max-width:60ch}
+/* pixel outline with notched corners */
+.notch { box-shadow: -4px 0 0 0 var(--ink), 4px 0 0 0 var(--ink), 0 -4px 0 0 var(--ink), 0 4px 0 0 var(--ink); }
 
-.stage{position:relative;display:grid;place-items:center;padding-block:8px}
-.wheel-box{position:relative;width:min(100%,460px);aspect-ratio:1;max-width:100%}
-canvas{width:100%;height:100%;display:block;filter:drop-shadow(0 12px 30px rgba(0,0,0,.6))}
-.pointer{position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:0;height:0;
-  border-left:18px solid transparent;border-right:18px solid transparent;border-top:34px solid var(--blood-hi);
-  filter:drop-shadow(0 3px 0 #000);z-index:2}
-.hub{position:absolute;inset:0;margin:auto;width:22%;aspect-ratio:1;border-radius:50%;
-  background:var(--panel);border:4px solid var(--line);display:grid;place-items:center;
-  font-family:var(--type);font-size:clamp(10px,2.4vw,13px);color:var(--muted);text-align:center;line-height:1.2}
+.cabinet {
+  background: var(--cab); padding: var(--pad); display: grid; gap: var(--pad); justify-items: center;
+  box-shadow:
+    -4px 0 0 0 var(--ink), 4px 0 0 0 var(--ink), 0 -4px 0 0 var(--ink), 0 4px 0 0 var(--ink),
+    inset 4px 4px 0 0 var(--cab-hi), inset -4px -4px 0 0 var(--cab-lo),
+    0 16px 0 0 rgba(0,0,0,.3);
+}
 
-.controls{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
-button{font:inherit;cursor:pointer;border:0}
-.spin{font-family:var(--display);font-size:24px;letter-spacing:.04em;color:#fff;background:var(--blood);
-  padding:14px 44px;border-radius:2px;box-shadow:0 4px 0 #4d0c09;transition:transform .08s, background .15s}
-.spin:hover{background:var(--blood-hi)}
-.spin:active{transform:translateY(3px);box-shadow:0 1px 0 #4d0c09}
-.spin:disabled{background:var(--panel-2);color:var(--muted);box-shadow:0 4px 0 #000;cursor:default}
-.ghost{background:transparent;color:var(--muted);border:1px solid var(--line);padding:10px 16px;border-radius:2px;font-size:14px}
-.ghost:hover{color:var(--fg);border-color:var(--muted)}
-button:focus-visible,label:focus-within{outline:2px solid var(--note);outline-offset:3px}
+/* marquee with blinking bulbs */
+.marquee {
+  margin: 0; width: 100%; padding: 14px 12px; background: var(--ink); text-align: center; position: relative;
+  font-weight: 700; font-size: clamp(22px, 6.4vw, 30px); line-height: 1.2; color: var(--gold);
+  text-shadow: 0 3px 0 var(--orange-d);
+}
+.marquee::before, .marquee::after {
+  content: ""; position: absolute; left: 8px; right: 8px; height: 4px;
+  background: repeating-linear-gradient(90deg, var(--gold) 0 4px, transparent 4px 12px);
+  animation: bulbs 1.2s steps(1) infinite;
+}
+.marquee::before { top: 4px; }
+.marquee::after { bottom: 4px; animation-delay: -.6s; }
+@keyframes bulbs { 50% { background: repeating-linear-gradient(90deg, transparent 0 8px, var(--gold) 8px 12px); } }
 
-.result{background:var(--note);color:var(--note-ink);padding:22px 24px 20px;transform:rotate(-1.2deg);
-  box-shadow:0 10px 24px rgba(0,0,0,.5);max-width:520px;width:100%;margin:0 auto;position:relative}
-.result::before{content:"";position:absolute;top:-10px;left:50%;width:90px;height:22px;transform:translateX(-50%) rotate(2deg);
-  background:rgba(220,210,180,.55)}
-.result .kicker{font-family:var(--type);font-size:13px;letter-spacing:.05em;margin:0}
-.result .town{font-family:var(--display);font-size:clamp(34px,9vw,52px);line-height:1.1;margin:4px 0 2px}
-.result .en{font-family:var(--type);font-size:16px;margin:0}
-.result .desc{margin:10px 0 0;font-size:14px}
-.result .en:empty,.result .desc:empty{display:none}
-.result.empty .town{color:rgba(43,38,20,.35)}
-.result.pop{animation:pop .45s cubic-bezier(.2,1.6,.4,1)}
-@keyframes pop{from{transform:rotate(-1.2deg) scale(.85)}to{transform:rotate(-1.2deg) scale(1)}}
+.machine { position: relative; width: 100%; container-type: inline-size; }
+.machine.thunk { animation: thunk .28s steps(4) 1; }
+.machine.hop { animation: hop .6s steps(6) 1; }
+@keyframes thunk { 25% { transform: translate(-4px, 2px); } 50% { transform: translate(4px, -2px); } 75% { transform: translate(-2px, 0); } }
+@keyframes hop { 30% { transform: translateY(-10px); } 60% { transform: translateY(0); } 80% { transform: translateY(-4px); } }
+#tiger { width: 100%; display: block; image-rendering: pixelated; }
+/* reel sits over the cream window inside the mouth: x22..82, y57..79 of a 104x100 sprite (head centred at x52) */
+.reel {
+  position: absolute; left: calc(22 / 104 * 100%); width: calc(60 / 104 * 100%);
+  top: calc(57 / 100 * 100%); height: calc(22 / 100 * 100%);
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(transparent 0, #000 30%, #000 70%, transparent 100%);
+  mask-image: linear-gradient(transparent 0, #000 30%, #000 70%, transparent 100%);
+}
+.strip { will-change: transform; }
+.strip div {
+  height: calc(22 / 3 / 104 * 100cqw); display: grid; place-items: center;
+  font-weight: 700; font-size: 4.6cqw; color: var(--ink); white-space: nowrap;
+}
+.lever-hit {
+  position: absolute; left: calc(84 / 104 * 100%); width: calc(20 / 104 * 100%);
+  top: calc(22 / 100 * 100%); height: calc(50 / 100 * 100%);
+  background: none; border: 0; cursor: grab; padding: 0; touch-action: none;
+}
+.lever-hit:active { cursor: grabbing; }
 
-section.panel{background:var(--panel);border:1px solid var(--line);padding:18px 18px 20px}
-.panel h2{font-family:var(--display);font-weight:400;font-size:20px;margin:0 0 4px}
-.panel .hint{color:var(--muted);font-size:13px;margin:0 0 14px}
-.towns{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}
-.town-opt{display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--panel-2);border:1px solid var(--line);cursor:pointer;min-width:0}
-.town-opt input{accent-color:var(--blood-hi);width:17px;height:17px;flex:none}
-.town-opt .sw{width:12px;height:12px;flex:none;border:1px solid rgba(0,0,0,.5)}
-.town-opt .nm{font-weight:700;font-size:14px}
-.town-opt .tag{font-family:var(--type);font-size:11px;color:var(--note);margin-left:auto;white-space:nowrap}
-.town-opt.off{opacity:.45}
+/* control deck: LED readout + the big red button */
+.deck { width: 100%; display: grid; gap: 12px; }
+.screen {
+  background: var(--ink); min-height: 76px; padding: 12px 16px; display: grid; gap: 2px; place-items: center; align-content: center; position: relative;
+  box-shadow: inset 0 4px 0 0 rgba(0,0,0,.35), inset 0 -2px 0 0 var(--cab-hi);
+}
+.screen .small { font-size: 12px; color: var(--soft); }
+.screen .town { font-size: 24px; font-weight: 700; color: var(--gold); min-height: 1.3em; text-shadow: 0 0 8px rgba(255,201,74,.35); }
+.screen .town.idle { font-size: 15px; font-weight: 400; color: var(--soft); text-shadow: none; }
+.cursor { position: absolute; right: 12px; bottom: 6px; font-size: 12px; color: var(--gold); animation: blink 1s steps(2) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
 
-.log{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;font-variant-numeric:tabular-nums}
-.log li{display:flex;gap:12px;font-size:14px;border-bottom:1px dashed var(--line);padding-bottom:6px}
-.log .n{font-family:var(--type);color:var(--muted);width:3.5em;flex:none}
-.log .empty{color:var(--muted)}
-footer{color:var(--muted);font-size:12px;text-align:center;font-family:var(--type)}
+.pull {
+  font: inherit; font-weight: 700; font-size: 18px; color: var(--cream);
+  background: var(--red); border: 0; width: 100%; padding: 14px 16px 16px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  text-shadow: 0 2px 0 var(--red-d);
+  box-shadow:
+    -4px 0 0 0 var(--ink), 4px 0 0 0 var(--ink), 0 -4px 0 0 var(--ink), 0 4px 0 0 var(--ink),
+    inset 0 -6px 0 0 var(--red-d), inset 0 4px 0 0 #f07a62;
+}
+.pull svg { width: 20px; height: 18px; shape-rendering: crispEdges; flex: none; }
+.pull svg g { fill: var(--cream); }
+.pull:active:not(:disabled) { transform: translateY(4px); box-shadow: -4px 0 0 0 var(--ink), 4px 0 0 0 var(--ink), 0 -4px 0 0 var(--ink), 0 4px 0 0 var(--ink), inset 0 -2px 0 0 var(--red-d), inset 0 4px 0 0 #f07a62; }
+.pull:disabled { filter: saturate(.3) brightness(.8); cursor: default; }
+button:focus-visible, input:focus-visible + span { outline: 3px solid var(--gold); outline-offset: 5px; }
 
-@media (prefers-reduced-motion:reduce){.result.pop{animation:none}}
+/* inset panels on the cabinet */
+.group { width: 100%; background: var(--cab-lo); padding: 16px 12px; display: grid; gap: 14px; justify-items: center; box-shadow: inset 0 4px 0 0 rgba(0,0,0,.25); }
+.group-head { display: flex; gap: 8px; align-items: baseline; justify-content: center; }
+h2 { margin: 0; font-size: 13px; font-weight: 700; color: var(--gold); }
+.count { font-size: 12px; color: var(--soft); font-variant-numeric: tabular-nums; }
+.towns { display: flex; flex-wrap: wrap; gap: 10px 8px; justify-content: center; padding: 2px; }
+.chip {
+  font: inherit; font-size: 13px; padding: 4px 10px 5px; cursor: pointer; border: 0;
+  background: transparent; color: var(--soft); text-decoration: line-through;
+  box-shadow: -2px 0 0 0 var(--cab-hi), 2px 0 0 0 var(--cab-hi), 0 -2px 0 0 var(--cab-hi), 0 2px 0 0 var(--cab-hi);
+}
+.chip[aria-pressed="true"] {
+  background: var(--orange); color: var(--ink); text-decoration: none;
+  box-shadow: -2px 0 0 0 var(--ink), 2px 0 0 0 var(--ink), 0 -2px 0 0 var(--ink), 0 2px 0 0 var(--ink), inset 0 -3px 0 0 var(--orange-d), inset 0 2px 0 0 var(--gold);
+}
+.chip:focus-visible { outline: 3px solid var(--gold); outline-offset: 4px; }
+.row { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.mini {
+  font: inherit; font-size: 12px; color: var(--cream); background: var(--cab); border: 0; padding: 4px 10px; cursor: pointer;
+  box-shadow: -2px 0 0 0 var(--ink), 2px 0 0 0 var(--ink), 0 -2px 0 0 var(--ink), 0 2px 0 0 var(--ink), inset 0 -2px 0 0 var(--cab-lo);
+}
+.check { display: flex; gap: 10px; align-items: center; font-size: 13px; color: var(--cream); cursor: pointer; }
+.check input { position: absolute; opacity: 0; pointer-events: none; }
+.check span.box-ui { width: 14px; height: 14px; flex: none; background: var(--cream); box-shadow: -2px 0 0 0 var(--ink), 2px 0 0 0 var(--ink), 0 -2px 0 0 var(--ink), 0 2px 0 0 var(--ink); display: grid; place-items: center; }
+.check input:checked + span.box-ui::after { content: ""; width: 6px; height: 6px; background: var(--red); }
+
+/* history prints out like an arcade ticket */
+.ticket {
+  width: calc(100% - 24px); background: var(--cream); color: var(--ink); padding: 16px 16px 12px; display: grid; gap: 10px; justify-items: center;
+  --hole: radial-gradient(circle at 6px 0, transparent 4px, var(--cream) 4.5px);
+  -webkit-mask: var(--hole) top / 12px 100% repeat-x; mask: var(--hole) top / 12px 100% repeat-x;
+}
+.ticket h2 { color: var(--orange-d); }
+.log { list-style: none; margin: 0; padding: 0; width: 100%; max-height: 200px; overflow-y: auto; text-align: left; }
+.log li { display: grid; grid-template-columns: 3em 1fr auto; gap: 8px; padding: 5px 2px; border-bottom: 2px dashed var(--cream-d); }
+.log li:last-child { border-bottom: 0; }
+.log .n, .log .t { color: #8a6f6a; font-size: 12px; font-variant-numeric: tabular-nums; align-self: center; }
+.empty { margin: 0; color: #8a6f6a; font-size: 13px; }
+.link { font: inherit; font-size: 12px; background: none; border: 0; color: var(--orange-d); cursor: pointer; padding: 2px 4px; text-decoration: underline; text-underline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .machine.thunk, .machine.hop, .cursor, .marquee::before, .marquee::after { animation: none; }
+}
 </style>
+<style>body{margin:0}[hidden]{display:none!important}</style>
 </head>
 <body>
 
-<div class="wrap">
-  <header>
-    <h1>호보이드 스폰 룰렛</h1>
-    <p class="sub">룰렛이 정한 곳에서 시작합니다. 다시 돌리기 없음.</p>
-  </header>
+<canvas id="sky" width="192" height="108" aria-hidden="true"></canvas>
 
-  <div class="stage">
-    <div class="wheel-box">
-      <div class="pointer" aria-hidden="true"></div>
-      <canvas id="wheel" width="920" height="920" aria-label="스폰 지역 룰렛"></canvas>
-      <div class="hub" id="hub">SPIN<br>TO<br>SPAWN</div>
+<div class="wrap" id="wrap">
+  <main class="cabinet">
+    <h1 class="marquee">좀보이드 맵 룰렛</h1>
+
+    <div class="machine notch" id="machine">
+      <canvas id="tiger" width="104" height="100" aria-hidden="true"></canvas>
+      <div class="reel" aria-hidden="true"><div class="strip" id="strip"></div></div>
+      <button class="lever-hit" id="leverHit" aria-label="레버 당기기"></button>
     </div>
-  </div>
 
-  <div class="controls">
-    <button class="spin" id="spinBtn">룰렛 돌리기</button>
-  </div>
+    <div class="deck">
+      <div class="screen notch" aria-live="polite">
+        <div class="small" id="resSmall" hidden>이번 시작 지점은</div>
+        <div class="town idle" id="resTown">레버를 당겨 보세요</div>
+        <span class="cursor" id="cursor" aria-hidden="true" hidden>▼</span>
+      </div>
+      <button class="pull" id="pull"><svg viewBox="0 0 10 9" aria-hidden="true"><g><rect x="1" y="0" width="2" height="2"/><rect x="4" y="0" width="2" height="2"/><rect x="7" y="0" width="2" height="2"/><rect x="0" y="2" width="2" height="2"/><rect x="8" y="2" width="2" height="2"/><rect x="2" y="4" width="6" height="5"/><rect x="1" y="5" width="8" height="3"/></g></svg>레버 당기기</button>
+    </div>
 
-  <div class="result empty" id="result" aria-live="polite">
-    <div class="town" id="rTown">???</div>
-    <p class="en" id="rEn"></p>
-    <p class="desc" id="rDesc"></p>
-  </div>
+    <section class="group">
+      <div class="group-head"><h2>후보 마을</h2><span class="count" id="count"></span></div>
+      <div class="towns" id="towns"></div>
+      <div class="row">
+        <button class="mini" id="allOn">전부 선택</button>
+        <button class="mini" id="allOff">전부 해제</button>
+      </div>
+      <label class="check"><input type="checkbox" id="removeWin"><span class="box-ui"></span>뽑힌 마을은 다음 판에서 빼기</label>
+    </section>
 
-  <section class="panel">
-    <h2>룰렛에 넣을 지역</h2>
-    <p class="hint">기본 = 어떤 모드에서든 선택 가능 · 샌드박스 = 커스텀 샌드박스에서만 선택 가능. 빼고 싶은 곳은 체크 해제하세요 (최소 2곳).</p>
-    <div class="towns" id="towns"></div>
-  </section>
-
-  <footer>호보이드 스폰 룰렛 · Project Zomboid 팬 메이드 · 비공식</footer>
+    <section class="ticket">
+      <h2>기록</h2>
+      <ol class="log" id="log"></ol>
+      <p class="empty" id="logEmpty">아직 기록이 없어요</p>
+      <button class="link" id="clearLog">기록 지우기</button>
+    </section>
+  </main>
 </div>
 
 <script>
-const TOWNS = [
-  // Build 42 vanilla spawn towns: 4 default, 7 Custom Sandbox only (Louisville isn't selectable)
-  {ko:"멀드로", en:"Muldraugh", tag:"기본", color:"#5a2a24", desc:"맵 한가운데. 상점이 몰려 있고 길이 단순해서 첫 판에 무난한 곳."},
-  {ko:"웨스트 포인트", en:"West Point", tag:"기본", color:"#3d4a3a", desc:"물자는 넉넉한데 시내에 좀비가 바글바글. 시작부터 정신없을 수 있음."},
-  {ko:"리버사이드", en:"Riverside", tag:"기본", color:"#4a3f2c", desc:"강가에 있는 조용한 동네. 천천히 자리 잡기 좋음."},
-  {ko:"로즈우드", en:"Rosewood", tag:"기본", color:"#2f3d45", desc:"작고 조용한 마을. 경찰서와 소방서가 가까워 초반이 편한 편."},
-  {ko:"에코 크릭", en:"Echo Creek", tag:"샌드박스", color:"#4b2f3e", desc:"커스텀 샌드박스에서 고를 수 있는 마을. 낯선 길 찾기부터 시작."},
-  {ko:"에크론", en:"Ekron", tag:"샌드박스", color:"#3a3a2a", desc:"커스텀 샌드박스에서 고를 수 있는 시골 마을. 외딴 분위기의 생존."},
-  {ko:"폴라스 레이크", en:"Fallas Lake", tag:"샌드박스", color:"#2c3a44", desc:"커스텀 샌드박스에서 고를 수 있는 호숫가 마을. 조용하게 시작하기 좋음."},
-  {ko:"마치 릿지", en:"March Ridge", tag:"샌드박스", color:"#4a2a2a", desc:"커스텀 샌드박스 전용. 주택가가 빽빽해서 초보에겐 빡센 편."},
-  {ko:"밸리 스테이션", en:"Valley Station", tag:"샌드박스", color:"#33303f", desc:"커스텀 샌드박스 전용. 루이빌 바로 아래쪽의 큰 동네라 좀비도 많음."},
-  {ko:"어빙턴", en:"Irvington", tag:"샌드박스", color:"#2e3a33", desc:"커스텀 샌드박스에서 고를 수 있는 꽤 큰 마을. 둘러볼 곳이 많음."},
-  {ko:"브랜든버그", en:"Brandenburg", tag:"샌드박스", color:"#433024", desc:"커스텀 샌드박스에서 고를 수 있는 큰 도시. 볼 건 많고 그만큼 위험함."}].map(t => ({...t, on:true}));
+const TOWNS = ["멀드로우", "리버사이드", "브란덴부르크", "에코 크릭", "에크론", "팔라스 레이크",
+  "어빙턴", "루이스빌", "머치릿지", "로즈 우드", "밸리 스테이션", "웨스트 포인트"];
 
-const cv = document.getElementById("wheel");
-const ctx = cv.getContext("2d");
-const spinBtn = document.getElementById("spinBtn");
-const resultEl = document.getElementById("result");
-const hub = document.getElementById("hub");
-let rotation = 0, spinning = false, soundOn = true, audio = null, history = [];
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
+};
+const off = new Set(store.get("pzt-off", []));
+let history = store.get("pzt-history", []);
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const $ = id => document.getElementById(id);
 
-try { const s = JSON.parse(localStorage.getItem("pz-roulette-off") || "[]"); TOWNS.forEach(t => { if (s.includes(t.en)) t.on = false; }); } catch(e) {}
+/* ---------- 8-bit sound ---------- */
+let audio;
+function beep(freq, len, vol = 0.04, type = "square", when = 0) {
+  if (!audio) return;
+  const t = audio.currentTime + when, o = audio.createOscillator(), g = audio.createGain();
+  o.type = type; o.frequency.value = freq;
+  g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(0.0001, t + len);
+  o.connect(g).connect(audio.destination); o.start(t); o.stop(t + len + 0.02);
+}
+const jingle = () => [523, 659, 784, 1047, 784, 1047].forEach((f, i) => beep(f, 0.12, 0.05, "square", i * 0.09));
 
-const active = () => TOWNS.filter(t => t.on);
-
-function draw(){
-  const list = active(), n = list.length, W = cv.width, c = W/2, r = c - 16;
-  ctx.clearRect(0,0,W,W);
-  // outer rim
-  ctx.beginPath(); ctx.arc(c,c,r+12,0,Math.PI*2); ctx.fillStyle="#0b0b0a"; ctx.fill();
-  ctx.lineWidth=4; ctx.strokeStyle="#3b3835"; ctx.stroke();
-  const seg = Math.PI*2/n;
-  list.forEach((t,i) => {
-    const a0 = rotation + i*seg - Math.PI/2, a1 = a0 + seg;
-    ctx.beginPath(); ctx.moveTo(c,c); ctx.arc(c,c,r,a0,a1); ctx.closePath();
-    ctx.fillStyle = t.color; ctx.fill();
-    // grime
-    const g = ctx.createRadialGradient(c,c,r*.2,c,c,r);
-    g.addColorStop(0,"rgba(0,0,0,0)"); g.addColorStop(1,"rgba(0,0,0,.35)");
-    ctx.fillStyle=g; ctx.fill();
-    ctx.lineWidth=3; ctx.strokeStyle="#0b0b0a"; ctx.stroke();
-    // label
-    ctx.save(); ctx.translate(c,c); ctx.rotate(a0 + seg/2);
-    ctx.textAlign="right"; ctx.textBaseline="middle";
-    const size = n > 10 ? 34 : n > 6 ? 40 : 48;
-    ctx.font = `${size}px "Black Han Sans", "Noto Sans KR", sans-serif`;
-    ctx.fillStyle="#000"; ctx.fillText(t.ko, r-34+3, 3);
-    ctx.fillStyle="#efe8db"; ctx.fillText(t.ko, r-34, 0);
-    ctx.font = `22px "Special Elite", monospace`;
-    ctx.fillStyle="rgba(239,232,219,.6)"; ctx.fillText(t.en.toUpperCase(), r-34, size*0.72);
-    ctx.restore();
+/* ---------- pixel sky ---------- */
+const sky = $("sky"), sx = sky.getContext("2d");
+const SKY = ["#1a1033", "#22143f", "#2d1b4e", "#3d2058", "#4b2560", "#622c64", "#7a3466", "#9a4168", "#b4506a", "#cf6466", "#e07a5f"];
+const stars = Array.from({ length: 46 }, () => ({ x: Math.random() * 192 | 0, y: Math.random() * 52 | 0, b: Math.random() }));
+function hill(base, amp, seed, x) { return base + Math.sin(x * 0.045 + seed) * amp + Math.sin(x * 0.11 + seed * 2) * amp * 0.4; }
+function drawSky(t = 0) {
+  SKY.forEach((c, i) => { sx.fillStyle = c; sx.fillRect(0, i * 7, 192, 8); });
+  sx.fillStyle = SKY[SKY.length - 1]; sx.fillRect(0, 77, 192, 31);
+  stars.forEach(s => {
+    const on = reduce ? s.b > .3 : Math.sin(t / 700 + s.b * 40) > -0.3;
+    if (!on) return;
+    sx.fillStyle = s.b > .8 ? "#ffc94a" : "#fff3dc"; sx.fillRect(s.x, s.y, 1, 1);
   });
-  // pegs
-  list.forEach((_,i) => {
-    const a = rotation + i*seg - Math.PI/2;
-    ctx.beginPath(); ctx.arc(c+Math.cos(a)*(r+4), c+Math.sin(a)*(r+4), 8, 0, Math.PI*2);
-    ctx.fillStyle="#c9c1b3"; ctx.fill();
-  });
-}
-
-function renderTowns(){
-  const box = document.getElementById("towns");
-  box.innerHTML = "";
-  TOWNS.forEach((t,i) => {
-    const lab = document.createElement("label");
-    lab.className = "town-opt" + (t.on ? "" : " off");
-    lab.innerHTML = `<input type="checkbox" id="town-${i}" ${t.on?"checked":""}><span class="sw" style="background:${t.color}"></span><span class="nm">${t.ko}</span><span class="tag">${t.tag}</span>`;
-    lab.querySelector("input").addEventListener("change", e => {
-      if (!e.target.checked && active().length <= 2) { e.target.checked = true; return; }
-      t.on = e.target.checked; lab.classList.toggle("off", !t.on);
-      try { localStorage.setItem("pz-roulette-off", JSON.stringify(TOWNS.filter(x=>!x.on).map(x=>x.en))); } catch(err) {}
-      draw();
-    });
-    box.appendChild(lab);
-  });
-}
-
-function tick(){
-  if (!soundOn) return;
-  try {
-    audio = audio || new (window.AudioContext || window.webkitAudioContext)();
-    const o = audio.createOscillator(), g = audio.createGain();
-    o.type="square"; o.frequency.value = 900 + Math.random()*200;
-    g.gain.setValueAtTime(.06, audio.currentTime); g.gain.exponentialRampToValueAtTime(.0001, audio.currentTime+.05);
-    o.connect(g).connect(audio.destination); o.start(); o.stop(audio.currentTime+.06);
-  } catch(e) {}
-}
-function thud(){
-  if (!soundOn) return;
-  try {
-    audio = audio || new (window.AudioContext || window.webkitAudioContext)();
-    const o = audio.createOscillator(), g = audio.createGain();
-    o.type="sawtooth"; o.frequency.setValueAtTime(160, audio.currentTime); o.frequency.exponentialRampToValueAtTime(40, audio.currentTime+.5);
-    g.gain.setValueAtTime(.25, audio.currentTime); g.gain.exponentialRampToValueAtTime(.0001, audio.currentTime+.6);
-    o.connect(g).connect(audio.destination); o.start(); o.stop(audio.currentTime+.6);
-  } catch(e) {}
-}
-
-function spin(){
-  if (spinning) return;
-  const list = active(), n = list.length, seg = Math.PI*2/n;
-  const winner = Math.floor(Math.random()*n);
-  // land the winner's center (with a little jitter) under the top pointer
-  const jitter = (Math.random()-.5) * seg * .7;
-  const targetMod = ((-(winner*seg + seg/2) + jitter) % (Math.PI*2) + Math.PI*2) % (Math.PI*2);
-  const curMod = ((rotation % (Math.PI*2)) + Math.PI*2) % (Math.PI*2);
-  let delta = targetMod - curMod; if (delta < 0) delta += Math.PI*2;
-  const turns = 6 + Math.floor(Math.random()*3);
-  const start = rotation, end = rotation + turns*Math.PI*2 + delta;
-  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const dur = reduce ? 600 : 5200 + Math.random()*1200;
-  const t0 = performance.now();
-  let lastSeg = Math.floor(start/seg);
-  spinning = true; spinBtn.disabled = true; spinBtn.textContent = "돌아가는 중…"; hub.innerHTML = "…";
-  resultEl.classList.add("empty"); resultEl.classList.remove("pop");
-  document.getElementById("rTown").textContent = "???";
-  document.getElementById("rEn").textContent = "";
-  document.getElementById("rDesc").textContent = "";
-  function frame(now){
-    const p = Math.min(1, (now - t0)/dur);
-    const e = 1 - Math.pow(1-p, 4);
-    rotation = start + (end-start)*e;
-    const s = Math.floor(rotation/seg);
-    if (s !== lastSeg) { lastSeg = s; tick(); }
-    draw();
-    if (p < 1) requestAnimationFrame(frame); else done(list[winner]);
+  // moon
+  sx.fillStyle = "#fff3dc";
+  [[3, 0, 5], [1, 1, 9], [0, 2, 11], [0, 3, 11], [0, 4, 11], [0, 5, 11], [0, 6, 11], [1, 7, 9], [3, 8, 5]]
+    .forEach(([dx, dy, w]) => sx.fillRect(152 + dx, 12 + dy, w, 1));
+  sx.fillStyle = "#e8d3b0"; sx.fillRect(155, 15, 2, 2); sx.fillRect(158, 18, 1, 1);
+  // far hills + pines, near hills + a farmhouse with a lit window
+  for (let x = 0; x < 192; x++) { const h = hill(70, 6, 1.3, x) | 0; sx.fillStyle = "#2a1838"; sx.fillRect(x, h, 1, 108 - h); }
+  for (let x = 6; x < 192; x += 13) {
+    const h = hill(70, 6, 1.3, x) | 0; sx.fillStyle = "#2a1838";
+    for (let r = 0; r < 6; r++) sx.fillRect(x - (r >> 1), h - 6 + r, 1 + (r >> 1) * 2, 1);
   }
-  requestAnimationFrame(frame);
+  for (let x = 0; x < 192; x++) { const h = hill(86, 5, 4.1, x) | 0; sx.fillStyle = "#160d24"; sx.fillRect(x, h, 1, 108 - h); }
+  const hx = 34, hy = hill(86, 5, 4.1, 38) | 0;
+  sx.fillStyle = "#160d24"; sx.fillRect(hx, hy - 7, 10, 8);
+  for (let r = 0; r < 4; r++) sx.fillRect(hx - 1 + r, hy - 11 + r, 12 - r * 2, 1);
+  sx.fillStyle = Math.sin(t / 900) > -0.8 ? "#ffc94a" : "#c8621e"; sx.fillRect(hx + 3, hy - 5, 2, 2);
+}
+(function skyLoop(t) { drawSky(t); if (!reduce) setTimeout(() => requestAnimationFrame(skyLoop), 250); })(0);
+
+/* ---------- pixel tiger ---------- */
+const tg = $("tiger"), c = tg.getContext("2d");
+const C = { K: "#2b1b24", O: "#f2902f", Od: "#c8621e", Y: "#ffc94a", W: "#fff3dc", Wd: "#e8d3b0", P: "#f59ab0", M: "#4a1426", R: "#e8443a", Rd: "#a82c2c", G: "#a7a9c2", Gd: "#5b5e76" };
+const r = (x, y, w, h, col) => { c.fillStyle = C[col] || col; c.fillRect(x, y, w, h); };
+function blob(x, y, w, h, prof, col) { // rounded pixel rectangle; prof = inset per row from each corner
+  for (let j = 0; j < h; j++) {
+    const k = Math.min(j, h - 1 - j), ins = k < prof.length ? prof[k] : 0;
+    r(x + ins, y + j, w - ins * 2, 1, col);
+  }
+}
+const outlined = (x, y, w, h, prof, fill) => { blob(x - 1, y - 1, w + 2, h + 2, prof, "K"); blob(x, y, w, h, prof, fill); };
+
+let lever = 0, eyes = "open", frame = 0;
+function eye(cx, cy) {
+  if (eyes === "blink") { r(cx - 6, cy, 13, 2, "K"); return; }
+  outlined(cx - 6, cy - 6, 13, 13, [3, 2, 1], "W");
+  blob(cx - 4, cy - 4, 9, 9, [2, 1], eyes === "win" ? "Y" : "Od");
+  const star = eyes === "spin" ? (frame % 2 ? "Y" : "W") : eyes === "win" ? "R" : "K";
+  if (eyes === "spin" && frame % 2) { [[-2, -2], [2, -2], [-2, 2], [2, 2]].forEach(([dx, dy]) => r(cx + dx, cy + dy, 1, 1, star)); r(cx - 1, cy - 1, 3, 3, star); }
+  else { r(cx, cy - 4, 1, 9, star); r(cx - 4, cy, 9, 1, star); r(cx - 1, cy - 1, 3, 3, star); }
+  r(cx - 4, cy - 5, 3, 1, "W"); r(cx - 5, cy - 4, 1, 2, "W");
+}
+function sparkle(x, y, col) { r(x, y - 2, 1, 5, col); r(x - 2, y, 5, 1, col); }
+const W = 104, H = 100;
+function drawTiger() {
+  // poster background: red sky over a warm yellow ground
+  r(0, 0, W, H, "#e2543b");
+  for (let i = 0; i < 6; i++) r(0, 6 + i * 9, W, 1, "#d84a33");
+  r(0, 58, W, H - 58, "Y"); r(0, 58, W, 2, "#f2a93a");
+  sparkle(5, 9, "Y"); sparkle(99, 44, "W"); sparkle(4, 48, "W"); r(98, 6, 1, 1, "Y"); r(9, 30, 1, 1, "Y");
+  // shoulders, cropped by the frame
+  outlined(2, 88, 100, 14, [5, 2, 1], "O");
+  r(10, 90, 6, 2, "K"); r(88, 90, 6, 2, "K"); r(20, 94, 4, 2, "K"); r(80, 94, 4, 2, "K");
+  // ears
+  outlined(12, 6, 20, 20, [4, 2, 1], "O"); blob(16, 10, 12, 12, [3, 1], "P");
+  outlined(72, 6, 20, 20, [4, 2, 1], "O"); blob(76, 10, 12, 12, [3, 1], "P");
+  // head
+  outlined(8, 16, 88, 70, [6, 3, 2, 1, 1], "O");
+  r(12, 82, 80, 2, "Od"); blob(14, 84, 76, 2, [1], "Od");
+  r(15, 18, 20, 1, "Y"); r(10, 20, 2, 7, "Y");
+  // forehead 王 and stripes
+  r(45, 20, 14, 2, "K"); r(47, 25, 10, 2, "K"); r(45, 30, 14, 2, "K"); r(51, 20, 2, 12, "K");
+  r(34, 17, 2, 5, "K"); r(68, 17, 2, 5, "K"); r(39, 17, 2, 3, "K"); r(63, 17, 2, 3, "K");
+  [[34, 7], [40, 9], [46, 6]].forEach(([y, w]) => { r(8, y, w, 2, "K"); r(96 - w, y, w, 2, "K"); });
+  eye(33, 35); eye(71, 35);
+  // muzzle, blush, nose
+  blob(38, 39, 28, 11, [3, 1], "W");
+  r(15, 45, 7, 2, "P"); r(82, 45, 7, 2, "P");
+  r(48, 40, 8, 2, "K"); r(49, 42, 6, 1, "K"); r(50, 43, 4, 1, "K"); r(51, 44, 2, 3, "K"); r(49, 40, 2, 1, "P");
+  // mouth with teeth
+  outlined(14, 51, 76, 33, [3, 1, 1], "M");
+  for (let i = 0; i < 8; i++) { const x = 16 + i * 9; [7, 5, 3, 1].forEach((w, j) => r(x + j, 51 + j, w, 1, "W")); }
+  for (let i = 0; i < 6; i++) { const x = 24 + i * 10; [1, 3, 5].forEach((w, j) => r(x + 2 - j, 80 + j, w, 1, "W")); }
+  // reel window
+  outlined(22, 57, 60, 22, [1], "W");
+  r(22, 57, 60, 1, "Wd"); r(22, 78, 60, 1, "Wd");
+  r(22, 66, 2, 3, "Od"); r(24, 67, 1, 1, "Od"); r(80, 66, 2, 3, "Od"); r(79, 67, 1, 1, "Od");
+  // lever: a stick on the right edge, pulled by the tiger's own arm
+  const pawY = 30 + Math.round(lever * 36), pivot = 80;
+  outlined(98, 74, 6, 12, [1], "Gd"); r(99, 75, 4, 1, "G");
+  r(101, pawY + 2, 2, pivot - pawY - 2, "G"); r(102, pawY + 2, 1, pivot - pawY - 2, "Gd");
+  outlined(98, pawY - 5, 7, 7, [2, 1], "R"); r(100, pawY - 4, 2, 1, "W");
+  // arm from the shoulder up to the paw, striped
+  const armTop = pawY + 9, armH = 89 - armTop;
+  outlined(90, armTop, 11, armH, [], "O");
+  r(90, armTop, 2, armH, "Y"); r(99, armTop, 2, armH, "Od");
+  for (let y = armTop + 5, k = 0; y < 85; y += 8, k++) k % 2 ? r(96, y, 5, 2, "K") : r(90, y, 5, 2, "K");
+  paw(88, pawY);
+}
+function paw(x, y) {
+  const toes = [[x, y + 1], [x + 4, y], [x + 8, y], [x + 12, y + 1]];
+  toes.forEach(([tx, ty]) => blob(tx - 1, ty - 1, 5, 6, [1], "K"));
+  blob(x - 1, y + 3, 16, 10, [2, 1], "K");
+  toes.forEach(([tx, ty]) => blob(tx, ty, 3, 4, [1], "O"));
+  blob(x, y + 4, 14, 8, [2, 1], "O");
+  r(x, y + 10, 14, 1, "Od");
+  toes.forEach(([tx, ty]) => r(tx + 1, ty + 1, 1, 2, "P"));
+  blob(x + 4, y + 6, 6, 4, [1], "P");
 }
 
-function done(t){
-  spinning = false; spinBtn.disabled = false; spinBtn.textContent = "다시 돌리기"; hub.innerHTML = "DAY<br>1";
-  thud();
-  document.getElementById("rTown").textContent = t.ko;
-  document.getElementById("rEn").textContent = t.en;
-  document.getElementById("rDesc").textContent = t.desc;
-  resultEl.classList.remove("empty"); void resultEl.offsetWidth; resultEl.classList.add("pop");
+// blink now and then
+setInterval(() => {
+  if (eyes !== "open") return;
+  eyes = "blink"; drawTiger(); setTimeout(() => { if (eyes === "blink") { eyes = "open"; drawTiger(); } }, 140);
+}, 3600);
+
+/* ---------- reel ---------- */
+const LOOPS = 40;
+let pos = 0, spinning = false;
+const strip = $("strip");
+const active = () => TOWNS.filter(t => !off.has(t));
+function buildStrip() {
+  const list = active();
+  strip.innerHTML = "";
+  const items = list.length ? list : ["?"];
+  const frag = document.createDocumentFragment();
+  for (let l = 0; l < LOOPS; l++) items.forEach(n => { const d = document.createElement("div"); d.textContent = n; frag.appendChild(d); });
+  strip.appendChild(frag);
+  pos = items.length;
+  placeStrip();
+}
+function placeStrip() {
+  const row = strip.firstChild ? strip.firstChild.getBoundingClientRect().height : 0;
+  strip.style.transform = `translateY(${(1 - pos) * row}px)`;
+}
+addEventListener("resize", placeStrip);
+
+/* ---------- ui ---------- */
+function renderTowns() {
+  $("towns").innerHTML = "";
+  TOWNS.forEach((name, i) => {
+    const b = document.createElement("button");
+    b.className = "chip"; b.id = `town-${i}`; b.textContent = name;
+    b.setAttribute("aria-pressed", !off.has(name));
+    b.addEventListener("click", () => {
+      if (spinning) return;
+      off.has(name) ? off.delete(name) : off.add(name);
+      b.setAttribute("aria-pressed", !off.has(name)); save(); buildStrip(); refresh();
+    });
+    $("towns").appendChild(b);
+  });
+}
+function renderLog() {
+  $("log").innerHTML = history.map((h, k) =>
+    `<li><span class="n">#${history.length - k}</span><span>${h.name}</span><span class="t">${h.time}</span></li>`).join("");
+  $("logEmpty").hidden = history.length > 0;
+  $("clearLog").hidden = history.length === 0;
+}
+function save() { store.set("pzt-off", [...off]); store.set("pzt-history", history); }
+function refresh() {
+  const n = active().length;
+  $("count").textContent = `${n}/${TOWNS.length}`;
+  $("pull").disabled = spinning || n === 0;
+  if (!spinning && n === 0) { $("resSmall").hidden = true; $("resTown").className = "town idle"; $("resTown").textContent = "마을을 하나 이상 골라 주세요"; }
 }
 
-spinBtn.addEventListener("click", spin);
-cv.addEventListener("click", spin);
+function animateLever(done, from = 0) {
+  const t0 = performance.now(), down = 160 * (1 - from), up = 320;
+  beep(140, 0.12, 0.06, "square");
+  (function step(now) {
+    const t = now - t0;
+    lever = t < down ? from + (1 - from) * t / down : Math.max(0, 1 - (t - down) / up);
+    drawTiger();
+    if (t < down + up) requestAnimationFrame(step); else { lever = 0; drawTiger(); }
+    if (t >= down && done) { const d = done; done = null; d(); }
+  })(t0);
+}
 
-renderTowns();
-draw();
-if (document.fonts && document.fonts.ready) document.fonts.ready.then(draw);
+function spin(from = 0) {
+  const list = active();
+  if (spinning || !list.length) { lever = 0; drawTiger(); return; }
+  try { audio = audio || new (window.AudioContext || window.webkitAudioContext)(); } catch {}
+  spinning = true; refresh();
+  $("resSmall").hidden = true; $("cursor").hidden = true; $("resTown").className = "town idle"; $("resTown").textContent = "돌아가는 중…";
+  animateLever(() => {
+    const n = list.length, k = Math.floor(Math.random() * n);
+    const start = (pos % n) + n;
+    const end = n * (reduce ? 3 : 22 + Math.floor(Math.random() * 6)) + k;
+    const dur = reduce ? 700 : 3800 + Math.random() * 900;
+    const t0 = performance.now();
+    let last = Math.round(start);
+    eyes = "spin";
+    (function step(now) {
+      const p = Math.min(1, (now - t0) / dur);
+      pos = start + (end - start) * (1 - Math.pow(1 - p, 4));
+      placeStrip();
+      const cur = Math.round(pos);
+      if (cur !== last) { last = cur; beep(900, 0.025, 0.025); frame++; drawTiger(); }
+      if (p < 1) return requestAnimationFrame(step);
+      pos = end; placeStrip();
+      finish(list[k]);
+    })(t0);
+  }, from);
+}
+
+// pull the paw down by hand: drag past 60% to spin, otherwise it springs back
+let drag = null;
+const lh = $("leverHit");
+lh.addEventListener("pointerdown", e => {
+  if (spinning) return;
+  lh.setPointerCapture(e.pointerId);
+  drag = { y: e.clientY, scale: tg.getBoundingClientRect().height / 100, moved: false };
+});
+lh.addEventListener("pointermove", e => {
+  if (!drag) return;
+  lever = Math.min(1, Math.max(0, (e.clientY - drag.y) / (36 * drag.scale)));
+  if (lever > 0.06) drag.moved = true;
+  drawTiger();
+});
+function release() {
+  if (!drag) return;
+  const d = drag; drag = null;
+  if (!d.moved || lever > 0.6) return spin(d.moved ? lever : 0);
+  const from = lever, t0 = performance.now();
+  (function back(now) { const p = Math.min(1, (now - t0) / 200); lever = from * (1 - p); drawTiger(); if (p < 1) requestAnimationFrame(back); })(t0);
+}
+lh.addEventListener("pointerup", release);
+lh.addEventListener("pointercancel", release);
+lh.addEventListener("click", e => { if (e.detail === 0) spin(); });
+
+// keep the sprite on whole-pixel scales when there is room, so every pixel is the same size
+// the whole column takes the tiger's width so every box lines up with it
+function fit() {
+  const cs = getComputedStyle(document.body);
+  const inset = 2 * 16 + 8; // cabinet padding + outlines
+  const avail = document.body.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight) - inset;
+  let s = Math.min(4, avail / W);
+  if (s >= 3) s = Math.floor(s);
+  $("machine").style.width = s * W + "px";
+  $("wrap").style.maxWidth = s * W + inset + "px";
+  placeStrip();
+}
+addEventListener("resize", fit);
+
+function typeOut(el, text) {
+  if (reduce) { el.textContent = text; return; }
+  el.textContent = ""; let i = 0;
+  const id = setInterval(() => { el.textContent = text.slice(0, ++i); if (i >= text.length) clearInterval(id); }, 70);
+}
+
+function finish(name) {
+  spinning = false;
+  const m = $("machine");
+  m.classList.remove("thunk", "hop"); void m.offsetWidth; m.classList.add("thunk");
+  setTimeout(() => { m.classList.remove("thunk"); void m.offsetWidth; m.classList.add("hop"); }, 300);
+  eyes = "win"; drawTiger(); jingle();
+  setTimeout(() => { if (eyes === "win") { eyes = "open"; drawTiger(); } }, 2200);
+  $("resSmall").hidden = false; $("cursor").hidden = false; $("resTown").className = "town"; typeOut($("resTown"), name);
+  history.unshift({ name, time: new Date().toTimeString().slice(0, 5) });
+  history = history.slice(0, 50);
+  if ($("removeWin").checked) {
+    off.add(name); renderTowns();
+    const n = active().length; buildStrip(); if (!n) pos = 1;
+  }
+  save(); renderLog(); refresh();
+}
+
+$("pull").addEventListener("click", () => spin());
+$("allOn").addEventListener("click", () => { if (spinning) return; off.clear(); save(); renderTowns(); buildStrip(); refresh(); });
+$("allOff").addEventListener("click", () => { if (spinning) return; TOWNS.forEach(t => off.add(t)); save(); renderTowns(); buildStrip(); refresh(); });
+$("clearLog").addEventListener("click", () => { history = []; save(); renderLog(); });
+$("removeWin").checked = store.get("pzt-remove", false);
+$("removeWin").addEventListener("change", e => store.set("pzt-remove", e.target.checked));
+document.addEventListener("keydown", e => {
+  if ((e.code === "Space" || e.code === "Enter") && !e.target.closest("input, button")) { e.preventDefault(); spin(); }
+});
+
+drawTiger(); renderTowns(); renderLog(); buildStrip(); fit(); refresh();
+document.fonts && document.fonts.ready.then(placeStrip);
 </script>
 </body>
 </html>
